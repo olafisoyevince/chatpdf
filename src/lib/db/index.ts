@@ -6,10 +6,11 @@ neonConfig.fetchConnectionCache = true;
 
 // if database url does not exist, thow an error
 if (!process.env.DATABASE_URL) {
-  throw new Error("database url not found");
+    throw new Error("database url not found");
 }
 
-// creating the sql server and connecting it to neon database
+// creating the sql server and connecting it your neon database url
+// so drizzle can have access to it.
 const sql = neon(process.env.DATABASE_URL);
 
 export const db = drizzle(sql);
