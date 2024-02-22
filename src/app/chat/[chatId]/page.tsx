@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 
 import ChatComponent from "@/components/ChatComponent";
 import ChatSideBar from "@/components/ChatSideBar";
@@ -8,7 +8,7 @@ import { chats, messages } from "@/lib/db/schema";
 import { auth } from "@clerk/nextjs";
 import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 
 type Props = {
     params: {
@@ -41,16 +41,16 @@ const ChatPage = async ({ params: { chatId } }: Props) => {
     console.log(_chats);
     console.log(chatId);
 
-    useEffect(() => {
-        const messageContainer = document.getElementById("message-container");
+    // useEffect(() => {
+    //     const messageContainer = document.getElementById("message-container");
 
-        if (messageContainer) {
-            messageContainer.scrollTo({
-                top: messageContainer.scrollHeight,
-                behavior: "smooth",
-            });
-        }
-    }, [messages]);
+    //     if (messageContainer) {
+    //         messageContainer.scrollTo({
+    //             top: messageContainer.scrollHeight,
+    //             behavior: "smooth",
+    //         });
+    //     }
+    // }, [messages]);
 
     return (
         <div
