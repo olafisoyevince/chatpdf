@@ -2,10 +2,11 @@ import ChatComponent from "@/components/ChatComponent";
 import ChatSideBar from "@/components/ChatSideBar";
 import PDFViewer from "@/components/PDFViewer";
 import { db } from "@/lib/db";
-import { chats } from "@/lib/db/schema";
+import { chats, messages } from "@/lib/db/schema";
 import { auth } from "@clerk/nextjs";
 import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
+import { useEffect } from "react";
 
 type Props = {
     params: {
@@ -38,8 +39,22 @@ const ChatPage = async ({ params: { chatId } }: Props) => {
     console.log(_chats);
     console.log(chatId);
 
+    useEffect(() => {
+        const messageContainer = document.getElementById("message-container");
+
+        if (messageContainer) {
+            messageContainer.scrollTo({
+                top: messageContainer.scrollHeight,
+                behavior: "smooth",
+            });
+        }
+    }, [messages]);
+
     return (
-        <div className=" flex max-h-screen overflow-scroll no-scrollbar">
+        <div
+            className=" flex max-h-screen overflow-scroll no-scrollbar "
+            id="message-container"
+        >
             <div className=" flex w-full max-h-screen overflow-scroll no-scrollbar">
                 {/* chat sidebar */}
                 <div className=" flex-[1] max-w-xs">
@@ -53,7 +68,7 @@ const ChatPage = async ({ params: { chatId } }: Props) => {
 
                 {/* chat component */}
                 <div className=" flex-[3] border-l-4 border-l-slate-200 ">
-                    <ChatComponent />
+                    <ChatComponent chatId={parseInt(chatId)} />
                 </div>
             </div>
         </div>

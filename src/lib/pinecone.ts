@@ -41,12 +41,15 @@ export async function loadS3IntoPinecone(fileKey: string) {
 
     // 3. vectorise and embed individual documents
     const vectors = await Promise.all(documents.flat().map(embedDocument));
+    console.log("From the loadtoPinecone function (vectors)", vectors);
 
     // 4. upload to pinecone
     const index = pc.index("chatpdf");
     const namespace = index.namespace(convertToASCII(fileKey));
     console.log("Inserting vectors into Pinecone");
     await namespace.upsert(vectors as any);
+
+    console.log(documents[0]);
 
     return documents[0];
 }
@@ -58,6 +61,8 @@ async function embedDocument(doc: Document) {
             doc.pageContent
         );
         const embeddings = await getEmbeddings(doc.pageContent);
+        console.log("From the embedDocuments function", embeddings);
+
         const hash = md5(doc.pageContent);
 
         return {
@@ -95,6 +100,8 @@ async function prepareDocument(page: PDFPage) {
             },
         }),
     ]);
+
+    console.log("From the prepare documents function", docs);
 
     return docs;
 }
