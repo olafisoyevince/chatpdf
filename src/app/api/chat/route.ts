@@ -85,5 +85,11 @@ export async function POST(req: Request) {
         });
 
         return new StreamingTextResponse(stream);
-    } catch (error) {}
+    } catch (error) {
+        console.error(error);
+        return NextResponse.json(
+            { Error: "An error occurred" },
+            { status: 500 }
+        );
+    }
 }
